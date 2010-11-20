@@ -1,0 +1,934 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ax27="http://net.java/xsd" xmlns:ns="http://grailsinaction.com" xmlns:ax28="http://security.java/xsd" xmlns:ax25="http://ast.groovy.codehaus.org/xsd" xmlns:ax24="http://lang.groovy/xsd" xmlns:ax21="http://grailsinaction.com/xsd" xmlns:ax22="http://util.java/xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ax218="http://control.groovy.codehaus.org/xsd" xmlns:ns1="http://org.apache.axis2/xsd" xmlns:ax233="http://syntax.groovy.codehaus.org/xsd" xmlns:ax220="http://io.java/xsd" xmlns:ax212="http://cert.security.java/xsd" xmlns:ax230="http://messages.control.groovy.codehaus.org/xsd" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:ax223="http://stmt.ast.groovy.codehaus.org/xsd" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:ax226="http://expr.ast.groovy.codehaus.org/xsd" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://grailsinaction.com">
+    <wsdl:documentation>No service description set</wsdl:documentation>
+    <wsdl:types>
+        <xs:schema xmlns:ax224="http://ast.groovy.codehaus.org/xsd" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://stmt.ast.groovy.codehaus.org/xsd">
+            <xs:import namespace="http://ast.groovy.codehaus.org/xsd"/>
+            <xs:complexType name="Statement">
+                <xs:complexContent>
+                    <xs:extension base="ax224:ASTNode">
+                        <xs:sequence>
+
+                            <xs:element minOccurs="0" name="empty" type="xs:boolean"/>
+                            <xs:element minOccurs="0" name="statementLabel" nillable="true" type="xs:string"/>
+                        </xs:sequence>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+            <xs:complexType name="BlockStatement">
+                <xs:complexContent>
+                    <xs:extension base="ax223:Statement">
+
+                        <xs:sequence>
+                            <xs:element minOccurs="0" name="empty" type="xs:boolean"/>
+                            <xs:element minOccurs="0" name="statements" nillable="true" type="xs:anyType"/>
+                            <xs:element minOccurs="0" name="text" nillable="true" type="xs:string"/>
+                            <xs:element minOccurs="0" name="variableScope" nillable="true" type="ax224:VariableScope"/>
+                        </xs:sequence>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+
+        </xs:schema>
+        <xs:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://syntax.groovy.codehaus.org/xsd">
+            <xs:complexType name="CSTNode">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="anExpression" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="description" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="empty" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="meaning" type="xs:int"/>
+                    <xs:element minOccurs="0" name="root" nillable="true" type="ax233:Token"/>
+
+                    <xs:element minOccurs="0" name="rootText" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="startColumn" type="xs:int"/>
+                    <xs:element minOccurs="0" name="startLine" type="xs:int"/>
+                    <xs:element minOccurs="0" name="type" type="xs:int"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="Token">
+                <xs:complexContent>
+                    <xs:extension base="ax233:CSTNode">
+
+                        <xs:sequence>
+                            <xs:element minOccurs="0" name="meaning" type="xs:int"/>
+                            <xs:element minOccurs="0" name="root" nillable="true" type="ax233:Token"/>
+                            <xs:element minOccurs="0" name="rootText" nillable="true" type="xs:string"/>
+                            <xs:element minOccurs="0" name="startColumn" type="xs:int"/>
+                            <xs:element minOccurs="0" name="startLine" type="xs:int"/>
+                            <xs:element minOccurs="0" name="text" nillable="true" type="xs:string"/>
+                            <xs:element minOccurs="0" name="type" type="xs:int"/>
+                        </xs:sequence>
+
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+            <xs:complexType name="Reduction">
+                <xs:complexContent>
+                    <xs:extension base="ax233:CSTNode">
+                        <xs:sequence>
+                            <xs:element minOccurs="0" name="anExpression" type="xs:boolean"/>
+                            <xs:element minOccurs="0" name="empty" type="xs:boolean"/>
+
+                            <xs:element minOccurs="0" name="root" nillable="true" type="ax233:Token"/>
+                        </xs:sequence>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+        </xs:schema>
+        <xs:schema xmlns:ax229="http://lang.groovy/xsd" xmlns:ax219="http://util.java/xsd" xmlns:ax232="http://ast.groovy.codehaus.org/xsd" xmlns:ax221="http://io.java/xsd" xmlns:ax231="http://messages.control.groovy.codehaus.org/xsd" xmlns:ax234="http://syntax.groovy.codehaus.org/xsd" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://control.groovy.codehaus.org/xsd">
+            <xs:import namespace="http://util.java/xsd"/>
+            <xs:import namespace="http://io.java/xsd"/>
+
+            <xs:import namespace="http://lang.groovy/xsd"/>
+            <xs:import namespace="http://messages.control.groovy.codehaus.org/xsd"/>
+            <xs:import namespace="http://ast.groovy.codehaus.org/xsd"/>
+            <xs:import namespace="http://syntax.groovy.codehaus.org/xsd"/>
+            <xs:complexType name="CompilerConfiguration">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="classpath" nillable="true" type="xs:anyType"/>
+                    <xs:element minOccurs="0" name="classpathList" nillable="true" type="xs:anyType"/>
+                    <xs:element minOccurs="0" name="debug" type="xs:boolean"/>
+
+                    <xs:element minOccurs="0" name="defaultScriptExtension" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="jointCompilationOptions" nillable="true" type="ax219:Map"/>
+                    <xs:element minOccurs="0" name="minimumRecompilationInterval" type="xs:int"/>
+                    <xs:element minOccurs="0" name="output" nillable="true" type="ax221:PrintWriter"/>
+                    <xs:element minOccurs="0" name="pluginFactory" nillable="true" type="ax218:ParserPluginFactory"/>
+                    <xs:element minOccurs="0" name="recompileGroovySource" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="scriptBaseClass" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="sourceEncoding" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="targetBytecode" nillable="true" type="xs:string"/>
+
+                    <xs:element minOccurs="0" name="targetDirectory" nillable="true" type="ax221:File"/>
+                    <xs:element minOccurs="0" name="tolerance" type="xs:int"/>
+                    <xs:element minOccurs="0" name="vMVersion" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="verbose" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="warningLevel" type="xs:int"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="ParserPluginFactory">
+                <xs:sequence/>
+
+            </xs:complexType>
+            <xs:complexType name="ProcessingUnit">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="classLoader" nillable="true" type="ax229:GroovyClassLoader"/>
+                    <xs:element minOccurs="0" name="configuration" nillable="true" type="ax218:CompilerConfiguration"/>
+                    <xs:element minOccurs="0" name="errorCollector" nillable="true" type="ax218:ErrorCollector"/>
+                    <xs:element minOccurs="0" name="phase" type="xs:int"/>
+                    <xs:element minOccurs="0" name="phaseDescription" nillable="true" type="xs:string"/>
+                </xs:sequence>
+
+            </xs:complexType>
+            <xs:complexType name="ErrorCollector">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="errorCount" type="xs:int"/>
+                    <xs:element minOccurs="0" name="errors" nillable="true" type="xs:anyType"/>
+                    <xs:element minOccurs="0" name="lastError" nillable="true" type="ax231:Message"/>
+                    <xs:element minOccurs="0" name="warningCount" type="xs:int"/>
+                    <xs:element minOccurs="0" name="warnings" nillable="true" type="xs:anyType"/>
+                </xs:sequence>
+
+            </xs:complexType>
+            <xs:complexType name="SourceUnit">
+                <xs:complexContent>
+                    <xs:extension base="ax218:ProcessingUnit">
+                        <xs:sequence>
+                            <xs:element minOccurs="0" name="aST" nillable="true" type="ax232:ModuleNode"/>
+                            <xs:element minOccurs="0" name="cST" nillable="true" type="ax234:Reduction"/>
+                            <xs:element minOccurs="0" name="name" nillable="true" type="xs:string"/>
+                        </xs:sequence>
+
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+        </xs:schema>
+        <xs:schema xmlns:ax23="http://util.java/xsd" xmlns:ax236="http://lang.groovy/xsd" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://grailsinaction.com/xsd">
+            <xs:import namespace="http://util.java/xsd"/>
+            <xs:import namespace="http://lang.groovy/xsd"/>
+            <xs:complexType name="Post">
+                <xs:sequence>
+
+                    <xs:element minOccurs="0" name="content" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="dateCreated" nillable="true" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="id" nillable="true" type="xs:long"/>
+                    <xs:element minOccurs="0" name="tags" nillable="true" type="ax22:Set"/>
+                    <xs:element minOccurs="0" name="user" nillable="true" type="ax21:User"/>
+                    <xs:element minOccurs="0" name="version" nillable="true" type="xs:long"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="User">
+
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="constraints" nillable="true" type="xs:anyType"/>
+                    <xs:element minOccurs="0" name="dateCreated" nillable="true" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="following" nillable="true" type="ax22:Set"/>
+                    <xs:element minOccurs="0" name="hasMany" nillable="true" type="xs:anyType"/>
+                    <xs:element minOccurs="0" name="id" nillable="true" type="xs:long"/>
+                    <xs:element minOccurs="0" name="mapping" nillable="true" type="xs:anyType"/>
+                    <xs:element minOccurs="0" name="metaClass" nillable="true" type="ax236:MetaClass"/>
+                    <xs:element minOccurs="0" name="password" nillable="true" type="xs:string"/>
+
+                    <xs:element minOccurs="0" name="posts" nillable="true" type="ax22:Set"/>
+                    <xs:element minOccurs="0" name="profile" nillable="true" type="ax21:Profile"/>
+                    <xs:element minOccurs="0" name="tags" nillable="true" type="ax22:Set"/>
+                    <xs:element minOccurs="0" name="userId" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="version" nillable="true" type="xs:long"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="Profile">
+                <xs:sequence>
+
+                    <xs:element minOccurs="0" name="belongsTo" nillable="true" type="xs:anyType"/>
+                    <xs:element minOccurs="0" name="bio" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="constraints" nillable="true" type="xs:anyType"/>
+                    <xs:element minOccurs="0" name="country" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="email" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="fullName" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="homepage" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="id" nillable="true" type="xs:long"/>
+                    <xs:element minOccurs="0" name="jabberAddress" nillable="true" type="xs:string"/>
+
+                    <xs:element minOccurs="0" name="metaClass" nillable="true" type="ax236:MetaClass"/>
+                    <xs:element minOccurs="0" name="photo" nillable="true" type="xs:base64Binary"/>
+                    <xs:element minOccurs="0" name="timezone" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="version" nillable="true" type="xs:long"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+        <xs:schema xmlns:ax29="http://security.java/xsd" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://net.java/xsd">
+            <xs:import namespace="http://security.java/xsd"/>
+
+            <xs:complexType name="URLClassLoader">
+                <xs:complexContent>
+                    <xs:extension base="ax28:SecureClassLoader">
+                        <xs:sequence>
+                            <xs:element maxOccurs="unbounded" minOccurs="0" name="uRLs" nillable="true" type="ax27:URL"/>
+                        </xs:sequence>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+
+            <xs:complexType name="URL">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="authority" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="content" nillable="true" type="xs:anyType"/>
+                    <xs:element minOccurs="0" name="defaultPort" type="xs:int"/>
+                    <xs:element minOccurs="0" name="file" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="host" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="path" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="port" type="xs:int"/>
+
+                    <xs:element minOccurs="0" name="protocol" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="query" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="ref" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="uRLStreamHandlerFactory" nillable="true" type="ax27:URLStreamHandlerFactory"/>
+                    <xs:element minOccurs="0" name="userInfo" nillable="true" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="URLStreamHandlerFactory">
+                <xs:sequence/>
+
+            </xs:complexType>
+        </xs:schema>
+        <xs:schema xmlns:ax227="http://ast.groovy.codehaus.org/xsd" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://expr.ast.groovy.codehaus.org/xsd">
+            <xs:import namespace="http://ast.groovy.codehaus.org/xsd"/>
+            <xs:complexType name="Expression">
+                <xs:complexContent>
+                    <xs:extension base="ax227:AnnotatedNode">
+                        <xs:sequence>
+                            <xs:element minOccurs="0" name="type" nillable="true" type="ax227:ClassNode"/>
+
+                        </xs:sequence>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+        </xs:schema>
+        <xs:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://messages.control.groovy.codehaus.org/xsd">
+            <xs:complexType name="Message">
+                <xs:sequence/>
+            </xs:complexType>
+
+        </xs:schema>
+        <xs:schema xmlns:ax215="http://util.java/xsd" xmlns:ax213="http://security.java/xsd" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://cert.security.java/xsd">
+            <xs:import namespace="http://security.java/xsd"/>
+            <xs:import namespace="http://util.java/xsd"/>
+            <xs:complexType name="Certificate">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="encoded" nillable="true" type="xs:base64Binary"/>
+                    <xs:element minOccurs="0" name="publicKey" nillable="true" type="ax213:PublicKey"/>
+                    <xs:element minOccurs="0" name="type" nillable="true" type="xs:string"/>
+
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="CertPath">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="certificates" nillable="true" type="xs:anyType"/>
+                    <xs:element minOccurs="0" name="encoded" nillable="true" type="xs:base64Binary"/>
+                    <xs:element minOccurs="0" name="encodings" nillable="true" type="ax215:Iterator"/>
+                    <xs:element minOccurs="0" name="type" nillable="true" type="xs:string"/>
+                </xs:sequence>
+
+            </xs:complexType>
+        </xs:schema>
+        <xs:schema xmlns:ax26="http://util.java/xsd" xmlns:ax217="http://security.java/xsd" xmlns:ax228="http://expr.ast.groovy.codehaus.org/xsd" xmlns:ax222="http://control.groovy.codehaus.org/xsd" xmlns:ax211="http://lang.groovy/xsd" xmlns:ax225="http://stmt.ast.groovy.codehaus.org/xsd" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://ast.groovy.codehaus.org/xsd">
+            <xs:import namespace="http://util.java/xsd"/>
+            <xs:import namespace="http://lang.groovy/xsd"/>
+            <xs:import namespace="http://security.java/xsd"/>
+            <xs:import namespace="http://control.groovy.codehaus.org/xsd"/>
+            <xs:import namespace="http://stmt.ast.groovy.codehaus.org/xsd"/>
+            <xs:import namespace="http://expr.ast.groovy.codehaus.org/xsd"/>
+
+            <xs:complexType name="ASTNode">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="columnNumber" type="xs:int"/>
+                    <xs:element minOccurs="0" name="lastColumnNumber" type="xs:int"/>
+                    <xs:element minOccurs="0" name="lastLineNumber" type="xs:int"/>
+                    <xs:element minOccurs="0" name="lineNumber" type="xs:int"/>
+                    <xs:element minOccurs="0" name="sourcePosition" nillable="true" type="ax25:ASTNode"/>
+                    <xs:element minOccurs="0" name="text" nillable="true" type="xs:string"/>
+                </xs:sequence>
+
+            </xs:complexType>
+            <xs:complexType name="AnnotatedNode">
+                <xs:complexContent>
+                    <xs:extension base="ax25:ASTNode">
+                        <xs:sequence>
+                            <xs:element minOccurs="0" name="annotations" nillable="true" type="xs:anyType"/>
+                            <xs:element minOccurs="0" name="declaringClass" nillable="true" type="ax25:ClassNode"/>
+                            <xs:element minOccurs="0" name="hasNoRealSourcePosition" type="xs:boolean"/>
+                            <xs:element minOccurs="0" name="synthetic" type="xs:boolean"/>
+
+                        </xs:sequence>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+            <xs:complexType name="ClassNode">
+                <xs:complexContent>
+                    <xs:extension base="ax25:AnnotatedNode">
+                        <xs:sequence>
+                            <xs:element minOccurs="0" name="abstractMethods" nillable="true" type="xs:anyType"/>
+
+                            <xs:element minOccurs="0" name="allDeclaredMethods" nillable="true" type="xs:anyType"/>
+                            <xs:element minOccurs="0" name="allInterfaces" nillable="true" type="ax22:Set"/>
+                            <xs:element minOccurs="0" name="annotated" type="xs:boolean"/>
+                            <xs:element minOccurs="0" name="annotationDefinition" type="xs:boolean"/>
+                            <xs:element minOccurs="0" name="annotations" nillable="true" type="xs:anyType"/>
+                            <xs:element minOccurs="0" name="array" type="xs:boolean"/>
+                            <xs:element minOccurs="0" name="compileUnit" nillable="true" type="ax25:CompileUnit"/>
+                            <xs:element minOccurs="0" name="componentType" nillable="true" type="ax25:ClassNode"/>
+                            <xs:element minOccurs="0" name="declaredConstructors" nillable="true" type="xs:anyType"/>
+
+                            <xs:element minOccurs="0" name="declaredMethodsMap" nillable="true" type="ax22:Map"/>
+                            <xs:element minOccurs="0" name="derivedFromGroovyObject" type="xs:boolean"/>
+                            <xs:element minOccurs="0" name="enclosingMethod" nillable="true" type="ax25:MethodNode"/>
+                            <xs:element minOccurs="0" name="enum" type="xs:boolean"/>
+                            <xs:element minOccurs="0" name="fields" nillable="true" type="xs:anyType"/>
+                            <xs:element minOccurs="0" name="genericsPlaceHolder" type="xs:boolean"/>
+                            <xs:element maxOccurs="unbounded" minOccurs="0" name="genericsTypes" nillable="true" type="ax25:GenericsType"/>
+                            <xs:element minOccurs="0" name="innerClasses" nillable="true" type="ax22:Iterator"/>
+                            <xs:element minOccurs="0" name="interface" type="xs:boolean"/>
+
+                            <xs:element maxOccurs="unbounded" minOccurs="0" name="interfaces" nillable="true" type="ax25:ClassNode"/>
+                            <xs:element minOccurs="0" name="methods" nillable="true" type="xs:anyType"/>
+                            <xs:element maxOccurs="unbounded" minOccurs="0" name="mixins" nillable="true" type="ax25:MixinNode"/>
+                            <xs:element minOccurs="0" name="modifiers" type="xs:int"/>
+                            <xs:element minOccurs="0" name="module" nillable="true" type="ax25:ModuleNode"/>
+                            <xs:element minOccurs="0" name="name" nillable="true" type="xs:string"/>
+                            <xs:element minOccurs="0" name="nameWithoutPackage" nillable="true" type="xs:string"/>
+                            <xs:element minOccurs="0" name="objectInitializerStatements" nillable="true" type="xs:anyType"/>
+                            <xs:element minOccurs="0" name="orAddStaticConstructorNode" nillable="true" type="ax25:MethodNode"/>
+
+                            <xs:element minOccurs="0" name="outerClass" nillable="true" type="ax25:ClassNode"/>
+                            <xs:element minOccurs="0" name="package" nillable="true" type="ax25:PackageNode"/>
+                            <xs:element minOccurs="0" name="packageName" nillable="true" type="xs:string"/>
+                            <xs:element minOccurs="0" name="plainNodeReference" nillable="true" type="ax25:ClassNode"/>
+                            <xs:element minOccurs="0" name="primaryClassNode" type="xs:boolean"/>
+                            <xs:element minOccurs="0" name="properties" nillable="true" type="xs:anyType"/>
+                            <xs:element minOccurs="0" name="redirect" nillable="true" type="ax25:ClassNode"/>
+                            <xs:element minOccurs="0" name="resolved" type="xs:boolean"/>
+                            <xs:element minOccurs="0" name="script" type="xs:boolean"/>
+
+                            <xs:element minOccurs="0" name="scriptBody" type="xs:boolean"/>
+                            <xs:element minOccurs="0" name="staticClass" type="xs:boolean"/>
+                            <xs:element minOccurs="0" name="superClass" nillable="true" type="ax25:ClassNode"/>
+                            <xs:element minOccurs="0" name="transformInstances" nillable="true" type="ax22:Map"/>
+                            <xs:element minOccurs="0" name="typeClass" nillable="true" type="xs:anyType"/>
+                            <xs:element maxOccurs="unbounded" minOccurs="0" name="unresolvedInterfaces" nillable="true" type="ax25:ClassNode"/>
+                            <xs:element minOccurs="0" name="unresolvedName" nillable="true" type="xs:string"/>
+                            <xs:element minOccurs="0" name="unresolvedSuperClass" nillable="true" type="ax25:ClassNode"/>
+                            <xs:element minOccurs="0" name="usingGenerics" type="xs:boolean"/>
+
+                        </xs:sequence>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+            <xs:complexType name="CompileUnit">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="classLoader" nillable="true" type="ax211:GroovyClassLoader"/>
+                    <xs:element minOccurs="0" name="classes" nillable="true" type="xs:anyType"/>
+                    <xs:element minOccurs="0" name="codeSource" nillable="true" type="ax217:CodeSource"/>
+
+                    <xs:element minOccurs="0" name="config" nillable="true" type="ax222:CompilerConfiguration"/>
+                    <xs:element minOccurs="0" name="modules" nillable="true" type="xs:anyType"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="MethodNode">
+                <xs:complexContent>
+                    <xs:extension base="ax25:AnnotatedNode">
+                        <xs:sequence>
+                            <xs:element minOccurs="0" name="abstract" type="xs:boolean"/>
+
+                            <xs:element minOccurs="0" name="annotationDefault" type="xs:boolean"/>
+                            <xs:element minOccurs="0" name="code" nillable="true" type="ax225:Statement"/>
+                            <xs:element minOccurs="0" name="dynamicReturnType" type="xs:boolean"/>
+                            <xs:element maxOccurs="unbounded" minOccurs="0" name="exceptions" nillable="true" type="ax25:ClassNode"/>
+                            <xs:element minOccurs="0" name="firstStatement" nillable="true" type="ax225:Statement"/>
+                            <xs:element maxOccurs="unbounded" minOccurs="0" name="genericsTypes" nillable="true" type="ax25:GenericsType"/>
+                            <xs:element minOccurs="0" name="modifiers" type="xs:int"/>
+                            <xs:element minOccurs="0" name="name" nillable="true" type="xs:string"/>
+                            <xs:element maxOccurs="unbounded" minOccurs="0" name="parameters" nillable="true" type="ax25:Parameter"/>
+
+                            <xs:element minOccurs="0" name="private" type="xs:boolean"/>
+                            <xs:element minOccurs="0" name="protected" type="xs:boolean"/>
+                            <xs:element minOccurs="0" name="public" type="xs:boolean"/>
+                            <xs:element minOccurs="0" name="returnType" nillable="true" type="ax25:ClassNode"/>
+                            <xs:element minOccurs="0" name="static" type="xs:boolean"/>
+                            <xs:element minOccurs="0" name="staticConstructor" type="xs:boolean"/>
+                            <xs:element minOccurs="0" name="typeDescriptor" nillable="true" type="xs:string"/>
+                            <xs:element minOccurs="0" name="variableScope" nillable="true" type="ax25:VariableScope"/>
+                            <xs:element minOccurs="0" name="voidMethod" type="xs:boolean"/>
+
+                        </xs:sequence>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+            <xs:complexType name="GenericsType">
+                <xs:complexContent>
+                    <xs:extension base="ax25:ASTNode">
+                        <xs:sequence>
+                            <xs:element minOccurs="0" name="lowerBound" nillable="true" type="ax25:ClassNode"/>
+
+                            <xs:element minOccurs="0" name="name" nillable="true" type="xs:string"/>
+                            <xs:element minOccurs="0" name="placeholder" type="xs:boolean"/>
+                            <xs:element minOccurs="0" name="resolved" type="xs:boolean"/>
+                            <xs:element minOccurs="0" name="type" nillable="true" type="ax25:ClassNode"/>
+                            <xs:element maxOccurs="unbounded" minOccurs="0" name="upperBounds" nillable="true" type="ax25:ClassNode"/>
+                            <xs:element minOccurs="0" name="wildcard" type="xs:boolean"/>
+                        </xs:sequence>
+                    </xs:extension>
+                </xs:complexContent>
+
+            </xs:complexType>
+            <xs:complexType name="Parameter">
+                <xs:complexContent>
+                    <xs:extension base="ax25:AnnotatedNode">
+                        <xs:sequence>
+                            <xs:element minOccurs="0" name="closureSharedVariable" type="xs:boolean"/>
+                            <xs:element minOccurs="0" name="dynamicTyped" type="xs:boolean"/>
+                            <xs:element minOccurs="0" name="inStaticContext" type="xs:boolean"/>
+                            <xs:element minOccurs="0" name="initialExpression" nillable="true" type="ax226:Expression"/>
+
+                            <xs:element minOccurs="0" name="name" nillable="true" type="xs:string"/>
+                            <xs:element minOccurs="0" name="originType" nillable="true" type="ax25:ClassNode"/>
+                            <xs:element minOccurs="0" name="type" nillable="true" type="ax25:ClassNode"/>
+                        </xs:sequence>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+            <xs:complexType name="VariableScope">
+                <xs:sequence>
+
+                    <xs:element minOccurs="0" name="classScope" nillable="true" type="ax25:ClassNode"/>
+                    <xs:element minOccurs="0" name="dynamicResolving" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="inStaticContext" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="parent" nillable="true" type="ax25:VariableScope"/>
+                    <xs:element minOccurs="0" name="referencedClassVariables" nillable="true" type="ax22:Map"/>
+                    <xs:element minOccurs="0" name="referencedClassVariablesIterator" nillable="true" type="ax22:Iterator"/>
+                    <xs:element minOccurs="0" name="referencedLocalVariablesCount" type="xs:int"/>
+                    <xs:element minOccurs="0" name="referencedLocalVariablesIterator" nillable="true" type="ax22:Iterator"/>
+                    <xs:element minOccurs="0" name="resolvingDynamic" type="xs:boolean"/>
+
+                    <xs:element minOccurs="0" name="root" type="xs:boolean"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="MixinNode">
+                <xs:complexContent>
+                    <xs:extension base="ax25:ClassNode">
+                        <xs:sequence/>
+                    </xs:extension>
+                </xs:complexContent>
+
+            </xs:complexType>
+            <xs:complexType name="ModuleNode">
+                <xs:complexContent>
+                    <xs:extension base="ax25:ASTNode">
+                        <xs:sequence>
+                            <xs:element minOccurs="0" name="classes" nillable="true" type="xs:anyType"/>
+                            <xs:element minOccurs="0" name="context" nillable="true" type="ax222:SourceUnit"/>
+                            <xs:element minOccurs="0" name="description" nillable="true" type="xs:string"/>
+                            <xs:element minOccurs="0" name="empty" type="xs:boolean"/>
+
+                            <xs:element minOccurs="0" name="importPackages" nillable="true" type="xs:anyType"/>
+                            <xs:element minOccurs="0" name="imports" nillable="true" type="xs:anyType"/>
+                            <xs:element minOccurs="0" name="importsResolved" type="xs:boolean"/>
+                            <xs:element minOccurs="0" name="mainClassName" nillable="true" type="xs:string"/>
+                            <xs:element minOccurs="0" name="methods" nillable="true" type="xs:anyType"/>
+                            <xs:element minOccurs="0" name="package" nillable="true" type="ax25:PackageNode"/>
+                            <xs:element minOccurs="0" name="packageInfo" type="xs:boolean"/>
+                            <xs:element minOccurs="0" name="packageName" nillable="true" type="xs:string"/>
+                            <xs:element minOccurs="0" name="scriptBaseClassFromConfig" nillable="true" type="ax25:ClassNode"/>
+
+                            <xs:element minOccurs="0" name="scriptClassDummy" nillable="true" type="ax25:ClassNode"/>
+                            <xs:element minOccurs="0" name="starImports" nillable="true" type="xs:anyType"/>
+                            <xs:element minOccurs="0" name="statementBlock" nillable="true" type="ax225:BlockStatement"/>
+                            <xs:element minOccurs="0" name="staticImportAliases" nillable="true" type="ax22:Map"/>
+                            <xs:element minOccurs="0" name="staticImportClasses" nillable="true" type="ax22:Map"/>
+                            <xs:element minOccurs="0" name="staticImportFields" nillable="true" type="ax22:Map"/>
+                            <xs:element minOccurs="0" name="staticImports" nillable="true" type="ax22:Map"/>
+                            <xs:element minOccurs="0" name="staticStarImports" nillable="true" type="ax22:Map"/>
+                            <xs:element minOccurs="0" name="unit" nillable="true" type="ax25:CompileUnit"/>
+
+                        </xs:sequence>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+            <xs:complexType name="PackageNode">
+                <xs:complexContent>
+                    <xs:extension base="ax25:AnnotatedNode">
+                        <xs:sequence>
+                            <xs:element minOccurs="0" name="name" nillable="true" type="xs:string"/>
+
+                            <xs:element minOccurs="0" name="text" nillable="true" type="xs:string"/>
+                        </xs:sequence>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+            <xs:complexType name="ClassNode">
+                <xs:complexContent>
+                    <xs:extension base="ax25:AnnotatedNode">
+                        <xs:sequence>
+
+                            <xs:element minOccurs="0" name="abstractMethods" nillable="true" type="xs:anyType"/>
+                            <xs:element minOccurs="0" name="allDeclaredMethods" nillable="true" type="xs:anyType"/>
+                            <xs:element minOccurs="0" name="allInterfaces" nillable="true" type="ax22:Set"/>
+                            <xs:element minOccurs="0" name="annotated" type="xs:boolean"/>
+                            <xs:element minOccurs="0" name="annotationDefinition" type="xs:boolean"/>
+                            <xs:element minOccurs="0" name="annotations" nillable="true" type="xs:anyType"/>
+                            <xs:element minOccurs="0" name="array" type="xs:boolean"/>
+                            <xs:element minOccurs="0" name="compileUnit" nillable="true" type="ax25:CompileUnit"/>
+                            <xs:element minOccurs="0" name="componentType" nillable="true" type="ax25:ClassNode"/>
+
+                            <xs:element minOccurs="0" name="declaredConstructors" nillable="true" type="xs:anyType"/>
+                            <xs:element minOccurs="0" name="declaredMethodsMap" nillable="true" type="ax22:Map"/>
+                            <xs:element minOccurs="0" name="derivedFromGroovyObject" type="xs:boolean"/>
+                            <xs:element minOccurs="0" name="enclosingMethod" nillable="true" type="ax25:MethodNode"/>
+                            <xs:element minOccurs="0" name="enum" type="xs:boolean"/>
+                            <xs:element minOccurs="0" name="fields" nillable="true" type="xs:anyType"/>
+                            <xs:element minOccurs="0" name="genericsPlaceHolder" type="xs:boolean"/>
+                            <xs:element maxOccurs="unbounded" minOccurs="0" name="genericsTypes" nillable="true" type="ax25:GenericsType"/>
+                            <xs:element minOccurs="0" name="innerClasses" nillable="true" type="ax22:Iterator"/>
+
+                            <xs:element minOccurs="0" name="interface" type="xs:boolean"/>
+                            <xs:element maxOccurs="unbounded" minOccurs="0" name="interfaces" nillable="true" type="ax25:ClassNode"/>
+                            <xs:element minOccurs="0" name="methods" nillable="true" type="xs:anyType"/>
+                            <xs:element maxOccurs="unbounded" minOccurs="0" name="mixins" nillable="true" type="ax25:MixinNode"/>
+                            <xs:element minOccurs="0" name="modifiers" type="xs:int"/>
+                            <xs:element minOccurs="0" name="module" nillable="true" type="ax25:ModuleNode"/>
+                            <xs:element minOccurs="0" name="name" nillable="true" type="xs:string"/>
+                            <xs:element minOccurs="0" name="nameWithoutPackage" nillable="true" type="xs:string"/>
+                            <xs:element minOccurs="0" name="objectInitializerStatements" nillable="true" type="xs:anyType"/>
+
+                            <xs:element minOccurs="0" name="orAddStaticConstructorNode" nillable="true" type="ax25:MethodNode"/>
+                            <xs:element minOccurs="0" name="outerClass" nillable="true" type="ax25:ClassNode"/>
+                            <xs:element minOccurs="0" name="package" nillable="true" type="ax25:PackageNode"/>
+                            <xs:element minOccurs="0" name="packageName" nillable="true" type="xs:string"/>
+                            <xs:element minOccurs="0" name="plainNodeReference" nillable="true" type="ax25:ClassNode"/>
+                            <xs:element minOccurs="0" name="primaryClassNode" type="xs:boolean"/>
+                            <xs:element minOccurs="0" name="properties" nillable="true" type="xs:anyType"/>
+                            <xs:element minOccurs="0" name="redirect" nillable="true" type="ax25:ClassNode"/>
+                            <xs:element minOccurs="0" name="resolved" type="xs:boolean"/>
+
+                            <xs:element minOccurs="0" name="script" type="xs:boolean"/>
+                            <xs:element minOccurs="0" name="scriptBody" type="xs:boolean"/>
+                            <xs:element minOccurs="0" name="staticClass" type="xs:boolean"/>
+                            <xs:element minOccurs="0" name="superClass" nillable="true" type="ax25:ClassNode"/>
+                            <xs:element minOccurs="0" name="transformInstances" nillable="true" type="ax22:Map"/>
+                            <xs:element minOccurs="0" name="typeClass" nillable="true" type="xs:anyType"/>
+                            <xs:element maxOccurs="unbounded" minOccurs="0" name="unresolvedInterfaces" nillable="true" type="ax25:ClassNode"/>
+                            <xs:element minOccurs="0" name="unresolvedName" nillable="true" type="xs:string"/>
+                            <xs:element minOccurs="0" name="unresolvedSuperClass" nillable="true" type="ax25:ClassNode"/>
+
+                            <xs:element minOccurs="0" name="usingGenerics" type="xs:boolean"/>
+                        </xs:sequence>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+        </xs:schema>
+        <xs:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://io.java/xsd">
+            <xs:complexType name="Writer">
+                <xs:sequence/>
+
+            </xs:complexType>
+            <xs:complexType name="PrintWriter">
+                <xs:complexContent>
+                    <xs:extension base="ax220:Writer">
+                        <xs:sequence/>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+            <xs:complexType name="File">
+
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="absolute" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="absoluteFile" nillable="true" type="ax220:File"/>
+                    <xs:element minOccurs="0" name="absolutePath" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="canonicalFile" nillable="true" type="ax220:File"/>
+                    <xs:element minOccurs="0" name="canonicalPath" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="directory" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="executable" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="file" type="xs:boolean"/>
+
+                    <xs:element minOccurs="0" name="freeSpace" type="xs:long"/>
+                    <xs:element minOccurs="0" name="hidden" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="lastModified" type="xs:long"/>
+                    <xs:element minOccurs="0" name="name" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="parent" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="parentFile" nillable="true" type="ax220:File"/>
+                    <xs:element minOccurs="0" name="path" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="prefixLength" type="xs:int"/>
+                    <xs:element minOccurs="0" name="readable" type="xs:boolean"/>
+
+                    <xs:element minOccurs="0" name="totalSpace" type="xs:long"/>
+                    <xs:element minOccurs="0" name="usableSpace" type="xs:long"/>
+                    <xs:element minOccurs="0" name="writable" type="xs:boolean"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+        <xs:schema xmlns:ax210="http://net.java/xsd" xmlns:ax235="http://ast.groovy.codehaus.org/xsd" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://lang.groovy/xsd">
+            <xs:import namespace="http://net.java/xsd"/>
+            <xs:import namespace="http://ast.groovy.codehaus.org/xsd"/>
+
+            <xs:complexType name="MetaClass">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="classNode" nillable="true" type="ax235:ClassNode"/>
+                    <xs:element minOccurs="0" name="metaMethods" nillable="true" type="xs:anyType"/>
+                    <xs:element minOccurs="0" name="methods" nillable="true" type="xs:anyType"/>
+                    <xs:element minOccurs="0" name="properties" nillable="true" type="xs:anyType"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="GroovyClassLoader">
+
+                <xs:complexContent>
+                    <xs:extension base="ax210:URLClassLoader">
+                        <xs:sequence>
+                            <xs:element minOccurs="0" name="classCacheEntry" nillable="true" type="xs:anyType"/>
+                            <xs:element maxOccurs="unbounded" minOccurs="0" name="classPath" nillable="true" type="xs:string"/>
+                            <xs:element maxOccurs="unbounded" minOccurs="0" name="loadedClasses" nillable="true" type="xs:anyType"/>
+                            <xs:element minOccurs="0" name="resourceLoader" nillable="true" type="ax24:GroovyResourceLoader"/>
+                            <xs:element minOccurs="0" name="shouldRecompile" nillable="true" type="xs:boolean"/>
+                        </xs:sequence>
+
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+            <xs:complexType name="GroovyResourceLoader">
+                <xs:sequence/>
+            </xs:complexType>
+        </xs:schema>
+        <xs:schema xmlns:ax216="http://net.java/xsd" xmlns:ax214="http://cert.security.java/xsd" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://security.java/xsd">
+            <xs:import namespace="http://cert.security.java/xsd"/>
+
+            <xs:import namespace="http://net.java/xsd"/>
+            <xs:complexType name="SecureClassLoader">
+                <xs:complexContent>
+                    <xs:extension base="xs:ClassLoader">
+                        <xs:sequence/>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+            <xs:complexType name="CodeSource">
+
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="certificates" nillable="true" type="ax212:Certificate"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="codeSigners" nillable="true" type="ax28:CodeSigner"/>
+                    <xs:element minOccurs="0" name="location" nillable="true" type="ax216:URL"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="PublicKey">
+                <xs:sequence/>
+            </xs:complexType>
+
+            <xs:complexType name="CodeSigner">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="signerCertPath" nillable="true" type="ax212:CertPath"/>
+                    <xs:element minOccurs="0" name="timestamp" nillable="true" type="ax28:Timestamp"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="Timestamp">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="signerCertPath" nillable="true" type="ax212:CertPath"/>
+
+                    <xs:element minOccurs="0" name="timestamp" nillable="true" type="xs:dateTime"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+        <xs:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://util.java/xsd">
+            <xs:complexType name="Set">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="empty" type="xs:boolean"/>
+                </xs:sequence>
+
+            </xs:complexType>
+            <xs:complexType name="Iterator">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="Map">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="empty" type="xs:boolean"/>
+                </xs:sequence>
+            </xs:complexType>
+
+        </xs:schema>
+        <xs:schema xmlns:ax237="http://grailsinaction.com/xsd" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://grailsinaction.com">
+            <xs:import namespace="http://grailsinaction.com/xsd"/>
+            <xs:element name="createPost">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="userId" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="content" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="createPostResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="ax237:Post"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+            <xs:element name="this$dist$get$2">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="name" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="this$dist$get$2Response">
+                <xs:complexType>
+
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="xs:anyType"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="this$dist$invoke$2">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="name" nillable="true" type="xs:string"/>
+
+                        <xs:element minOccurs="0" name="args" nillable="true" type="xs:anyType"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="this$dist$invoke$2Response">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="xs:anyType"/>
+                    </xs:sequence>
+
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="createRemotePost">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="content" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+
+            </xs:element>
+            <xs:element name="createRemotePostResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" type="xs:long"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="this$dist$set$2">
+
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="name" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="value" nillable="true" type="xs:anyType"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+    </wsdl:types>
+
+    <wsdl:message name="this$dist$set$2Request">
+        <wsdl:part name="parameters" element="ns:this$dist$set$2"/>
+    </wsdl:message>
+    <wsdl:message name="this$dist$get$2Request">
+        <wsdl:part name="parameters" element="ns:this$dist$get$2"/>
+    </wsdl:message>
+    <wsdl:message name="this$dist$get$2Response">
+        <wsdl:part name="parameters" element="ns:this$dist$get$2Response"/>
+    </wsdl:message>
+
+    <wsdl:message name="this$dist$invoke$2Request">
+        <wsdl:part name="parameters" element="ns:this$dist$invoke$2"/>
+    </wsdl:message>
+    <wsdl:message name="this$dist$invoke$2Response">
+        <wsdl:part name="parameters" element="ns:this$dist$invoke$2Response"/>
+    </wsdl:message>
+    <wsdl:message name="createRemotePostRequest">
+        <wsdl:part name="parameters" element="ns:createRemotePost"/>
+    </wsdl:message>
+
+    <wsdl:message name="createRemotePostResponse">
+        <wsdl:part name="parameters" element="ns:createRemotePostResponse"/>
+    </wsdl:message>
+    <wsdl:message name="createPostRequest">
+        <wsdl:part name="parameters" element="ns:createPost"/>
+    </wsdl:message>
+    <wsdl:message name="createPostResponse">
+        <wsdl:part name="parameters" element="ns:createPostResponse"/>
+    </wsdl:message>
+
+    <wsdl:portType name="postPortType">
+        <wsdl:operation name="this$dist$set$2">
+            <wsdl:input message="ns:this$dist$set$2Request" wsaw:Action="urn:this$dist$set$2"/>
+        </wsdl:operation>
+        <wsdl:operation name="this$dist$get$2">
+            <wsdl:input message="ns:this$dist$get$2Request" wsaw:Action="urn:this$dist$get$2"/>
+            <wsdl:output message="ns:this$dist$get$2Response" wsaw:Action="urn:this$dist$get$2Response"/>
+        </wsdl:operation>
+        <wsdl:operation name="this$dist$invoke$2">
+
+            <wsdl:input message="ns:this$dist$invoke$2Request" wsaw:Action="urn:this$dist$invoke$2"/>
+            <wsdl:output message="ns:this$dist$invoke$2Response" wsaw:Action="urn:this$dist$invoke$2Response"/>
+        </wsdl:operation>
+        <wsdl:operation name="createRemotePost">
+            <wsdl:input message="ns:createRemotePostRequest" wsaw:Action="urn:createRemotePost"/>
+            <wsdl:output message="ns:createRemotePostResponse" wsaw:Action="urn:createRemotePostResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="createPost">
+            <wsdl:input message="ns:createPostRequest" wsaw:Action="urn:createPost"/>
+
+            <wsdl:output message="ns:createPostResponse" wsaw:Action="urn:createPostResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="postSoap11Binding" type="ns:postPortType">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <wsdl:operation name="this$dist$set$2">
+            <soap:operation soapAction="urn:this$dist$set$2" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="this$dist$get$2">
+            <soap:operation soapAction="urn:this$dist$get$2" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="this$dist$invoke$2">
+            <soap:operation soapAction="urn:this$dist$invoke$2" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="createRemotePost">
+            <soap:operation soapAction="urn:createRemotePost" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="createPost">
+            <soap:operation soapAction="urn:createPost" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="postSoap12Binding" type="ns:postPortType">
+        <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <wsdl:operation name="this$dist$set$2">
+            <soap12:operation soapAction="urn:this$dist$set$2" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="this$dist$get$2">
+            <soap12:operation soapAction="urn:this$dist$get$2" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="this$dist$invoke$2">
+            <soap12:operation soapAction="urn:this$dist$invoke$2" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="createRemotePost">
+            <soap12:operation soapAction="urn:createRemotePost" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="createPost">
+            <soap12:operation soapAction="urn:createPost" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="post">
+        <wsdl:port name="postHttpSoap11Endpoint" binding="ns:postSoap11Binding">
+            <soap:address location="http://192.168.0.100:8080/hubbub/services/post.postHttpSoap11Endpoint/"/>
+        </wsdl:port>
+        <wsdl:port name="postHttpSoap12Endpoint" binding="ns:postSoap12Binding">
+            <soap12:address location="http://192.168.0.100:8080/hubbub/services/post.postHttpSoap12Endpoint/"/>
+
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
